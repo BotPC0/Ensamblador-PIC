@@ -1,0 +1,32 @@
+;ZONA DE DATOS***************
+
+__CONFIG _CP_OFF & _WDT_OFF & _PWRTE_ON & _XT_OSC
+
+LIST P=16F84A
+INCLUDE <P16F84A.INC>
+
+
+;ZONA DE CODIGO*************
+
+ORG 0
+
+INICIO
+bsf STATUS,RP0
+clrf TRISB
+;movlw b´00011111´ o bien vale decir b'11111111' el bit 5, 6 y 7 no tienen utilidad
+;movwf TRISA
+bcf STATUS,RP0
+
+PRINCIPAL
+movf PORTA,W ;PORTA -> W
+andlw b'00000111'
+call TABLA
+movwf PORTB
+goto PRINCIPAL
+
+TABLA
+
+addwf PCL,F
+DT b'10000011', b'01000011', b'00000100', b'00100010', b'00000100', b'00000100', b'00100100', b'00001000'
+
+END

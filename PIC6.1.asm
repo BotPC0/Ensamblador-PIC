@@ -1,0 +1,37 @@
+__CONFIG _CP_OFF & _WDT_OFF & _PWRTE_ON & _XT_OSC
+
+LIST P=16F84A
+INCLUDE <P16F84A.INC>
+
+INICIO
+
+CBLOCK 0x0C
+ENDC
+
+ORG 0
+
+bsf STATUS,RP0
+clrf TRISB
+movlw b'00011111'
+movwf TRISA
+bcf STATUS,RP0
+
+PROGRAMA
+
+movlw b'00000001'
+movwf PORTB
+call Retardo_200ms
+call Retardo_200ms
+
+movlw b'00000000'
+movwf PORTB
+call Retardo_200ms
+call Retardo_100ms
+
+goto PROGRAMA
+
+
+
+INCLUDE<RETARDOS.INC>
+
+END

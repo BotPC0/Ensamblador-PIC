@@ -1,0 +1,35 @@
+__CONFIG _CP_OFF & _WDT_OFF & _PWRTE_ON & _XT_OSC
+
+LIST P=16F84A
+INLUDE <P16F84A.INC>
+
+ORG 0
+
+INICIO
+
+bsf STATUS,RP0
+clrf TRISB
+movlw b'00011111'
+movwf TRISA
+bcf STATUS,RP0
+
+PRINCIPAL
+
+movf PORTA,W
+andlw b'00000001'
+addwf PCL,F
+goto S1
+goto S2
+S1
+movlw b'11110000'
+goto SALIDA
+s2
+movlw b'11111111'
+goto SALIDA
+
+SALIDA
+
+movwf PORTB
+goto PRINCIPAL
+
+END
